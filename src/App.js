@@ -4,7 +4,7 @@ import LandingScreen from "./screen/LandingScreen";
 
 function App() {
   return (
-    <div className="App">
+    <div className="App h-screen w-full ">
       <LandingScreen></LandingScreen>
     </div>
   );
