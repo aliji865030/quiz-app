@@ -2,8 +2,8 @@ import React, { useRef, useState } from "react";
 
 let currentCount=1
 let ansValue=0
+
 const LandingScreen = () => {
-  // const [quizData,setQuizData]=useState([])
   const [quizData,setQuizData]=useState([]);
   const [count,setCount]=useState();
   const readyBtn=useRef();
@@ -11,11 +11,8 @@ const LandingScreen = () => {
   const result=useRef();
 
   async function getData() {
-    // const data = await fetch("https://opentdb.com/api.php?amount=10&type=multiple");
     const data=await fetch('https://the-trivia-api.com/v2/questions');
     const parsedData = await data.json();
-
-    // for (let i = 0; i < 10; i++) {
       const currentData = 
         {
           question_no:currentCount++,
@@ -26,29 +23,19 @@ const LandingScreen = () => {
         wrongAns3: parsedData[0].incorrectAnswers[2]
         
       }
-    
       setQuizData([currentData])
-      // quizData.push(currentData)
-    // }
-
-    console.log(quizData);
   }
+
+
   
   function loadQuiz(){
     readyBtn.current.style.display="none";
     quizDiv.current.style.display="block";
-    // console.log(quizData);
     getData()
-
-
   }
 
   function checkOption(e,question_no){
-    // currentCount++;
-      // console.log(e.target.innerText);
-      // console.log(e);
-      // console.log(e.target.parentElement.parentElement.children[0].innerText)
-
+  
       if(e.target.innerText===e.target.parentElement.parentElement.children[0].innerText){
         ansValue++
       }
@@ -61,10 +48,7 @@ const LandingScreen = () => {
         quizDiv.current.style.display="none";
         result.current.style.display="block"
         setCount(ansValue)
-
       }
-
-      console.log(question_no);
   }
 
   function playAgain(){
@@ -75,18 +59,16 @@ const LandingScreen = () => {
     getData();
   }
 
-
-
-
   return (
     <div className="h-screen w-full ">
      <div>
-     <button ref={readyBtn} onClick={loadQuiz} className="border-2 text-2xl border-green-600 px-5 py-1 rounded-lg hover:bg-green-500 hover:text-white" >Ready</button>
+     <button ref={readyBtn} onClick={loadQuiz} className="border-2 my-40 text-2xl border-green-600 px-5 py-1 rounded-lg hover:bg-green-500 hover:text-white" >Ready</button>
      </div>
      <div ref={quizDiv} style={{display:"none", marginLeft:"30%", marginTop:"5%"}} className="  h-screen w-full " >
       {quizData.map((item,index)=>{
         return(
           <div className="text-black bg-red-400 w-6/12 py-5 rounded-xl px-3" key={item.question_no}>
+            
             <h1 className="text-2xl font-semibold text-white pb-5">{item.question_no} : {item.question}</h1>
             <ul className="c cursor-pointer text-white flex flex-col justify-center items-start px-20 gap-2" >
               <li>
@@ -119,3 +101,6 @@ const LandingScreen = () => {
 };
 
 export default LandingScreen;
+
+
+
